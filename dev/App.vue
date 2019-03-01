@@ -3,7 +3,18 @@
     <flash-message
       transitionName="flash"
       class="flashpool"
-    ></flash-message>
+    >
+      <template slot="iconForError">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </template>
+      <template slot="iconForSuccess">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 13">
+          <polygon points="260.557 86 262 87.413 249.617 99 244 93.008 245.536 91.689 249.714 96.146" transform="translate(-244 -86)"/>
+        </svg>
+      </template>
+    </flash-message>
     <section class="cpanel">
       <div class="cpanel__wrapper">
         <div class="cpanel__group">
@@ -242,5 +253,36 @@ export default {
   margin-top: 5px;
   font-style: italic;
   color: #a1abac;
+}
+
+.flash__icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flash__icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.success .flash__icon {
+  background: #3c763d;
+}
+
+.success .flash__icon svg {
+  fill: #dff0d8;
+}
+
+.error .flash__icon {
+  background: #a94442;
+}
+
+.error .flash__icon svg {
+  fill: #f2dede;
 }
 </style>

@@ -98,6 +98,18 @@ Vue.use(VueFlashMessage, {
 });
 ```
 
+## Messages icons
+You can easily pass templates through slots to render icons for messages. Just specify the slot as "iconForYourMessageType".
+```html
+<flash-message>
+  <template slot="iconForSuccess">
+    <svg viewBox="0 0 18 13">
+      <polygon points="260.557 86 262 87.413 249.617 99 244 93.008 245.536 91.689 249.714 96.146" transform="translate(-244 -86)" />
+    </svg>
+  </template>
+</flash-message>
+```
+
 ## API
 Flash method returns message object giving you full controll over it's contents, options and lifecycle.
 ```javascript

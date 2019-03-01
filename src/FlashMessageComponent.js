@@ -8,14 +8,26 @@ export default function ({
     render(createElement) {
       const children = [];
       Object.keys(this.storage).map((messageId) => {
+        const { content, type, options } = this.storage[messageId];
         const subchildren = [
           createElement('div', {
             attrs: { class: 'flash__message-content' },
-            domProps: { innerHTML: this.storage[messageId].content },
+            domProps: { innerHTML: content },
           }),
         ];
 
-        if (!this.storage[messageId].options.important) {
+        const iconTemplateSearchRegex = new RegExp(`iconFor${type}`, 'i');
+        const iconTemplateSlotName = Object.keys(this.$slots).find(name => iconTemplateSearchRegex.test(name));
+
+        if (iconTemplateSlotName) {
+          const slot = this.$slots[iconTemplateSlotName];
+          const icon = createElement('div', {
+            attrs: { class: 'flash__icon' },
+          }, slot);
+          subchildren.unshift(icon);
+        }
+
+        if (!options.important) {
           subchildren.push(createElement('button', {
             attrs: {
               type: 'button',
@@ -86,6 +98,9 @@ export default function ({
         return bus.storage;
       },
     },
+    created() {
+      this.initRouterListener();
+    },
     methods: {
       cssClasses(id) {
         return this.getFlash(id).type;
@@ -107,6 +122,12 @@ export default function ({
         if (typeof flash !== 'undefined') {
           flash.onCompleteInteract();
         }
+      },
+      initRouterListener() {
+        if (!this.$router) return;
+        this.$router.afterEach(() => {
+          Object.keys(this.storage).forEach(id => this.destroyFlash(id));
+        });
       },
     },
   };
